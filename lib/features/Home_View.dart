@@ -69,7 +69,6 @@ class HomeView extends StatelessWidget {
                 selectedTextColor: Colors.white,
                 onDateChange: (date) {}),
             const SizedBox(height: 10),
-           
           ],
         ),
       ),
