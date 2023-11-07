@@ -86,13 +86,9 @@ class _HomeViewState extends State<HomeView> {
                 valueListenable: Hive.box<Task>('task').listenable(),
                 builder:
                     (BuildContext context, Box<Task> value, Widget? child) {
-                  List<int> indexes = [];
-                  int index = 0;
                   List<Task> tasks = value.values.where((element) {
-                    index++;
                     if (element.date.split('T').first ==
                         selectedTime.toIso8601String().split('T').first) {
-                      indexes.add(index);
                       return true;
                     } else {
                       return false;
@@ -137,13 +133,16 @@ class _HomeViewState extends State<HomeView> {
                               onDismissed: (direction) {
                                 if (direction == DismissDirection.startToEnd) {
                                   setState(() {
-                                    value.deleteAt(indexes[index]);
+                                    value.delete(
+                                      '${item.title} ${item.date}',
+                                    );
                                   });
                                 } else {
                                   setState(() {
-                                    value.putAt(
-                                        indexes[index],
+                                    value.put(
+                                        '${item.title} ${item.date}',
                                         Task(
+                                            Id: '${item.title} ${item.date}',
                                             title: item.title,
                                             note: item.note,
                                             date: item.date,

@@ -333,14 +333,17 @@ class _AddTaskViewState extends State<AddTaskView> {
               GestureDetector(
                 onTap: () {
                   // if (_formKey.currentState!.validate()) {
-                  box.add(Task(
-                      title: titleCon.text,
-                      note: noteCon.text,
-                      date: _date.toIso8601String(),
-                      start_time: _startTime,
-                      end_time: _endTime,
-                      color: _selectedColor,
-                      iscomplete: false));
+                  box.put(
+                      '${titleCon.text} ${_date.toIso8601String()}',
+                      Task(
+                          Id: '${titleCon.text} ${_date.toIso8601String()}',
+                          title: titleCon.text,
+                          note: noteCon.text,
+                          date: _date.toIso8601String(),
+                          start_time: _startTime,
+                          end_time: _endTime,
+                          color: _selectedColor,
+                          iscomplete: false));
 
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const HomeView(),

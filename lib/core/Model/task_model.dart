@@ -25,6 +25,9 @@ class Task {
   @HiveField(6)
   final bool iscomplete;
 
+  @HiveField(7)
+  final String Id;
+
   Task(
       {required this.title,
       required this.note,
@@ -32,7 +35,8 @@ class Task {
       required this.start_time,
       required this.end_time,
       required this.color,
-      required this.iscomplete});
+      required this.iscomplete,
+      required this.Id});
 
   get endTime => null;
 }
