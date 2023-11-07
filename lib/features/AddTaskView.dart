@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:task_9/cash.dart';
+import 'package:task_9/core/Model/task_model.dart';
 import 'package:task_9/core/color.dart';
 import 'package:task_9/core/styles.dart';
 import 'package:task_9/features/Home_View.dart';
@@ -13,11 +14,9 @@ class AddTaskView extends StatefulWidget {
 }
 
 class _AddTaskViewState extends State<AddTaskView> {
-  
-  static int NumOfTasks = 0;
   var titleCon = TextEditingController();
   var noteCon = TextEditingController();
- 
+
   final _formKey = GlobalKey<FormState>();
   DateTime _date = DateTime.now();
   String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
@@ -26,6 +25,13 @@ class _AddTaskViewState extends State<AddTaskView> {
       .toString();
 
   int _selectedColor = 0;
+  late Box<Task> box;
+  @override
+  void initState() {
+    box = Hive.box('task');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -323,39 +329,40 @@ class _AddTaskViewState extends State<AddTaskView> {
                 ],
               ),
               const Spacer(),
+
               GestureDetector(
                 onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const HomeView(),
-                    ));
-                  }
+                  // if (_formKey.currentState!.validate()) {
+                  box.add(Task(
+                      title: titleCon.text,
+                      note: noteCon.text,
+                      date: _date.toIso8601String(),
+                      start_time: _startTime,
+                      end_time: _endTime,
+                      color: _selectedColor,
+                      iscomplete: false));
+
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const HomeView(),
+                  ));
                 },
-                child: GestureDetector(
-                  onTap: () {
-                    NumOfTasks++;
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const HomeView(),
-                    ));
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 100,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.primaryColor,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 100,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.primaryColor,
+                  ),
+                  child: const Text(
+                    'Create Task',
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
-                    child: const Text(
-                      'Create Task',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              )
+              ),
             ],
           )
         ],

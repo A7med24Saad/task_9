@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:task_9/core/Model/task_model.dart';
 import 'package:task_9/core/color.dart';
 import 'package:task_9/core/styles.dart';
 import 'package:task_9/splash_view.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox<Task>('Task');
+  Hive.registerAdapter<Task>(TaskAdapter());
   runApp(const MainApp());
 }
 

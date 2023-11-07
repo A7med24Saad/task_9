@@ -24,13 +24,4 @@ class cash {
     var prefs = await SharedPreferences.getInstance();
     return prefs.getBool(key) ?? false;
   }
-  static cashnumoftasks(String key, int num) async {
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setInt(key, num);
-  }
-
-  static Future<Object> getnum(String key) async {
-    var prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(key) ?? false;
-  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:task_9/cash.dart';
 import 'package:task_9/core/styles.dart';
+import 'package:task_9/features/Home_View.dart';
 import 'package:task_9/features/firstscreen.dart';
 
 class SplashView extends StatefulWidget {
@@ -15,9 +17,11 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 4), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => const firstscreen(),
-      ));
+      cash.getbool(cash.isupload).then((value) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) =>
+                value ? const HomeView() : const firstscreen()));
+      });
     });
   }
 

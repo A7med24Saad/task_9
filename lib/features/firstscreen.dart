@@ -26,6 +26,11 @@ class _firstscreenState extends State<firstscreen> {
         imagepath = value;
       });
     });
+    cash.get(cash.NameKey).then((value) {
+      setState(() {
+        name = value;
+      });
+    });
   }
 
   @override
